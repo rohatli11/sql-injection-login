@@ -1,5 +1,30 @@
 components:
-- components: []
+- components:
+  - layout_properties: {grid_position: 'HLENRQ,UZJMFR'}
+    name: label_1
+    properties: {text: 'Username:'}
+    type: Label
+  - layout_properties: {grid_position: 'HLENRQ,HOMTXE'}
+    name: check_box_1
+    properties: {text: SQL Injection possible}
+    type: CheckBox
+  - layout_properties: {grid_position: 'HLENRQ,GUDNCM'}
+    name: check_box_2
+    properties: {text: SQL Injection not possible}
+    type: CheckBox
+  - event_bindings: {pressed_enter: username_input_pressed_enter}
+    layout_properties: {grid_position: 'WDQPTI,XWEFEV'}
+    name: username_input
+    properties: {}
+    type: TextBox
+  - layout_properties: {grid_position: 'AWZDVZ,VSAECY'}
+    name: label_2
+    properties: {text: Password}
+    type: Label
+  - layout_properties: {grid_position: 'EKARJT,PSZQPG'}
+    name: password_input
+    properties: {}
+    type: TextBox
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}
