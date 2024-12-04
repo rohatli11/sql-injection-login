@@ -16,11 +16,16 @@ class Form1(Form1Template):
   
 
   def Enter_Button_click(self, **event_args):
-    res, query = anvil.server.call("login", self.username_input.text, self.password_input.text)
+    count, res, query = anvil.server.call("login_unsecure", self.username_input.text, self.password_input.text)
 
-    if not res:
-        self.ausgabe_feld.text = query
+    if count == 1:
+      self.ausgabe_feld.text = "Login erfolgreich!"
+      open_form('Form3', "login successful", query)
+    elif count > 1:
+      self.ausgabe_feld.text = "Login erfolgreich, aber mehrere Benutzer gefunden!"
+      open_form('Form3', "login suspicious", query)
     else:
-        self.ausgabe_feld.text = f"Ergebnisse: {res}, Abfrage: {query}"
+      self.ausgabe_feld.text = f"Login fehlgeschlagen!: {query}"
+
     
    

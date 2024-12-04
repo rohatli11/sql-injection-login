@@ -14,22 +14,37 @@ import sqlite3
 # Here is an example - you can replace it with your own:
 #
 
-import sqlite3
-from anvil.server import callable
+@anvil.server.callable
+def login_unsecure(username, password):
+  conn = sqlite3.connect(data_files['temp_database.db'])
+  cursor = conn.cursor()
+  
+  query = f"SELECT username, password FROM Users WHERE username = '{username}' AND password = '{password}'"
+  
+  try:
+    cursor.execute(query)
+    res = cursor.fetchall()
+  except Exception as e:
+    print(e)
+    res = []
+  
+  conn.close()
+  return len(res), res, query
 
 @anvil.server.callable
-def login(username, password):
-    conn = sqlite3.connect(data_files['temp_database.db'])
-    cursor = conn.cursor()
-    query = f"SELECT username, password FROM Users WHERE username = '{username}' AND password = '{password}'"
+def login_secure(username, password):
+  conn = sqlite3.connect(data_files['temp_database.db'])
+  cursor = conn.cursor()
+  
+  query = "SELECT username, password FROM Users WHERE username = ? AND password = ?"
+  
+  try:
+    cursor.execute(query, (username, password))
+    res = cursor.fetchall()
+  except Exception as e:
+    print(e)
+    res = []
+  
+  conn.close()
+  return len(res), res, query
 
-    try:
-      cursor.execute(query)
-      res = cursor.fetchall()
-    except Exception as e: 
-      print(e)
-      res = ""
-    
-    
-    conn.close()
-    return res, query

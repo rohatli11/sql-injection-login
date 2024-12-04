@@ -2,7 +2,7 @@ components:
 - components:
   - layout_properties: {grid_position: 'HLENRQ,UZJMFR'}
     name: label_1
-    properties: {text: 'Username:'}
+    properties: {bold: true, text: 'Username:'}
     type: Label
   - layout_properties: {grid_position: 'HLENRQ,HOMTXE'}
     name: check_box_1
@@ -19,16 +19,16 @@ components:
     type: TextBox
   - layout_properties: {grid_position: 'AWZDVZ,VSAECY'}
     name: label_2
-    properties: {text: Password}
+    properties: {bold: true, text: Password}
     type: Label
   - layout_properties: {grid_position: 'EKARJT,PSZQPG'}
     name: password_input
     properties: {}
     type: TextBox
   - event_bindings: {click: Enter_Button_click}
-    layout_properties: {grid_position: 'OPLYUF,LAQOLR'}
+    layout_properties: {grid_position: 'QUSBBC,YZRSXC'}
     name: Enter_Button
-    properties: {text: Login}
+    properties: {role: outlined-button, text: Login}
     type: Button
   - layout_properties: {grid_position: 'CANITS,VTUZGV'}
     name: ausgabe_feld
