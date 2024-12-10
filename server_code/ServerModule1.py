@@ -57,20 +57,16 @@ def login_secure(username, password):
 
 @anvil.server.callable
 def get_user_by_account_no(account_no):
-  conn = sqlite3.connect(data_files['temp_database.db'])
-  cursor = conn.cursor()
-  
-  # Sichere SQL-Abfrage mit Platzhaltern
-  query = "SELECT username, email FROM Users WHERE AccountNo = ?"
-  
-  try:
-      cursor.execute(query, (account_no,))
-      user = cursor.fetchone()
-      if user:
-          return {"username": user[0], "email": user[1]}
-  except Exception as e:
-      print(f"Fehler: {e}")
-  finally:
-      conn.close()
-  
+  # Fetch user data from the database
+  user = app_tables.users.get(account_no=account_no)
+  if user:
+      return {'username': user['username']}
   return None
+
+@anvil.server.callable
+def get_login_state():
+  if "login" not in anvil.server.session:
+    anvil.server.session["login"] = False  # Default is False
+  return anvil.server.session["login"]
+
+
