@@ -31,9 +31,8 @@ def login_unsecure(username, password):
   
   conn.close()
 
-  # Falls Benutzer gefunden wurde, return zusätzlich accountnumber
   if len(res) > 0:
-    accountnumber = res[0][2]  # Annahme: accountnumber ist das 3. Feld in der Antwort
+    accountnumber = res[0][2] 
     return len(res), res, query, accountnumber
   else:
     return len(res), res, query, 0
@@ -55,3 +54,23 @@ def login_secure(username, password):
   conn.close()
   return len(res), res, query
 
+
+@anvil.server.callable
+def get_user_by_account_no(account_no):
+  conn = sqlite3.connect(data_files['temp_database.db'])
+  cursor = conn.cursor()
+  
+  # Sichere SQL-Abfrage mit Platzhaltern
+  query = "SELECT username, email FROM Users WHERE AccountNo = ?"
+  
+  try:
+      cursor.execute(query, (account_no,))
+      user = cursor.fetchone()
+      if user:
+          return {"username": user[0], "email": user[1]}
+  except Exception as e:
+      print(f"Fehler: {e}")
+  finally:
+      conn.close()
+  
+  return None
