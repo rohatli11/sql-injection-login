@@ -19,7 +19,8 @@ def login_unsecure(username, password):
   conn = sqlite3.connect(data_files['temp_database.db'])
   cursor = conn.cursor()
   
-  query = f"SELECT username, password FROM Users WHERE username = '{username}' AND password = '{password}'"
+  # Query mit accountnumber
+  query = f"SELECT username, password, AccountNo FROM Users WHERE username = '{username}' AND password = '{password}'"
   
   try:
     cursor.execute(query)
@@ -29,7 +30,13 @@ def login_unsecure(username, password):
     res = []
   
   conn.close()
-  return len(res), res, query
+
+  # Falls Benutzer gefunden wurde, return zusätzlich accountnumber
+  if len(res) > 0:
+    accountnumber = res[0][2]  # Annahme: accountnumber ist das 3. Feld in der Antwort
+    return len(res), res, query, accountnumber
+  else:
+    return len(res), res, query, 0
 
 @anvil.server.callable
 def login_secure(username, password):
