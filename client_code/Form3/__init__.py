@@ -12,6 +12,13 @@ class Form3(Form3Template):
   def __init__(self, res, query, account_no, **properties):
     self.init_components(**properties)
 
+    state = anvil.server.call('get_login_state')
+
+    if state is True:
+      open_form('AccountNo')
+    else:
+      pass
+    
     if res == "login successful":
       self.text_box_1.text = "Login successful!"
       location.hash = f"?AccountNo={account_no}"
